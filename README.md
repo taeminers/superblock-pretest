@@ -1,36 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Balloon Game for SuperBlock Pre-Test
 
-## Getting Started
+## Overview
 
-First, run the development server:
+- 2D 격자판 (MxM 정사각형 그리드)을 생성해야 합니다. 각 격자는 '풍선🎈' 또는 ' '(빈칸)으로 표시됩니다.
+- 풍선을 클릭 시 터지게 되며, 상하좌우로 연결된 경우 같이 터지게 됩니다.
+- 사용자는 한번에 가장 많은 풍선을 터뜨릴 수 있는 순서대로 풍선을 클릭해야 합니다.
+  (큰 → 작은 순서, 동일한 크기일 시 순서 상관 없음.)
+- 위 조건에 맞지 않는 풍선을 클릭하면 게임에서 패배합니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev.
-# or
-bun dev
-```
+## Game Logic
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 1. 유저 인풋으로 격자 크기를 입력받는다.
+- 2. 입력 받은 크기의 격자 안에 랜덤으로 풍성들을 생성한다.
+- 3. 생성한 후, 연결되어 있는 풍선 무리들을 찾고 무리의 크기로 정렬한다. 이 정보를 저장한다.
+- 4. 게임을 시작한다. 유저가 풍선을 누르면 풍선들을 터트린다. 3번에서 저장한 크기의 무리의 0번째 인덱스 값과(가장 큰 무리의 크기) 크기가 같다면 게임을 지속하고 저장했던 곳에서 해당 인덱스를 빼준다. 크기가 다르다면 게임을 종료하고 1로 돌아간다.
