@@ -14,3 +14,13 @@ Balloon Game for SuperBlock Pre-Test
 - 2. 입력 받은 크기의 격자 안에 랜덤으로 풍성들을 생성한다.
 - 3. 생성한 후, 연결되어 있는 풍선 무리들을 찾고 무리의 크기로 정렬한다. 이 정보를 저장한다.
 - 4. 게임을 시작한다. 유저가 풍선을 누르면 풍선들을 터트린다. 3번에서 저장한 크기의 무리의 0번째 인덱스 값과(가장 큰 무리의 크기) 크기가 같다면 게임을 지속하고 저장했던 곳에서 해당 인덱스를 빼준다. 크기가 다르다면 게임을 종료하고 1로 돌아간다.
+
+## Tech Stack
+
+- NextJs (App Router)
+- Zustand (State Management)
+- Vanilla Extract (Styling)
+
+### Pre-Imported Code
+
+- 개발 편의를 위해 기본적인 코어 컴포넌트를 개인 프로젝트에서 갖고 왔습니다. Flex 컴포넌트로 단순히 flexbox를 사용하기 위한 컴포넌트이니 참고 부탁드립니다.
