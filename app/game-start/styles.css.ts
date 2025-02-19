@@ -7,3 +7,10 @@ export const layoutContainer = style({
   height: "100vh",
   width: "100vw",
 });
+
+export const contentContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+});

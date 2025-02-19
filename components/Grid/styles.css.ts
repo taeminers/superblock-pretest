@@ -8,10 +8,11 @@ export const gridContainer = style({
   gridTemplateRows: `repeat(${gridRowSize}, 1fr)`,
   justifyContent: "center",
   border: "2px solid black",
-  width: "80vw",
-  height: "80vh",
+  width: "60vw",
+  height: "60vh",
 });
 
 export const gridCell = style({
   border: "1px solid black",
+  fontSize: "3.5vw",
 });
