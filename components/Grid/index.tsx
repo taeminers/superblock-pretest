@@ -6,10 +6,19 @@ import * as S from "./styles.css";
 import Flex from "../Core/Flex";
 import { FindClusters } from "@/utils/Find-Clusters";
 import { FindGraphs } from "@/utils/Find-Graphs";
+import { useModalStore } from "@/zustand/useModalStore";
+import { GameOverModal } from "../GameOverModal";
+import { GameCompleteModal } from "../GameCompleteModal";
 
 export const Grid = () => {
   const { matrixSizeCols, matrixSizeRows } = useMatrixSizeStore();
   const [grid, setGrid] = useState<number[][]>([]);
+  const {
+    isGameOverOpen,
+    openGameOverModal,
+    isGameCompleteOpen,
+    openGameCompleteModal,
+  } = useModalStore();
   const clusters = FindClusters(grid);
   // result holds the different clusters as array of sets. Each set hold
   const handleBalloonPop = (x: number, y: number) => {
@@ -17,7 +26,7 @@ export const Grid = () => {
     // if balloon is popped, check if it is in the biggest cluster and remove that cluster from the set.
     const clickedGraph = FindGraphs(grid, x, y);
     if (clickedGraph.size !== clusters[0].size) {
-      alert("Game Over!");
+      openGameOverModal();
       return;
     }
     // remove the cluster from the set and update grid
@@ -32,6 +41,7 @@ export const Grid = () => {
     setGrid(newGrid);
     // check if game has finished.
     if (clusters.length === 1) {
+      openGameCompleteModal();
     }
   };
   useEffect(() => {
@@ -39,7 +49,7 @@ export const Grid = () => {
     const generateGrid = (): number[][] => {
       return Array.from({ length: matrixSizeRows }, () =>
         Array.from({ length: matrixSizeCols }, () =>
-          Math.random() > 0.35 ? 1 : 0
+          Math.random() > 0.5 ? 1 : 0
         )
       );
     };
@@ -47,26 +57,30 @@ export const Grid = () => {
   }, []);
 
   return (
-    <div
-      className={S.gridContainer}
-      style={assignInlineVars({
-        [S.gridColumnSize]: String(matrixSizeCols),
-        [S.gridRowSize]: String(matrixSizeRows),
-      })}
-    >
-      {grid.flatMap((row, rowIndex) =>
-        row.map((cell, colIndex) => (
-          <Flex
-            key={`${rowIndex}-${colIndex}`}
-            className={S.gridCell}
-            justify="center"
-            items="center"
-            onClick={() => handleBalloonPop(rowIndex, colIndex)}
-          >
-            {cell === 1 ? "🎈" : ""}
-          </Flex>
-        ))
-      )}
-    </div>
+    <>
+      <div
+        className={S.gridContainer}
+        style={assignInlineVars({
+          [S.gridColumnSize]: String(matrixSizeCols),
+          [S.gridRowSize]: String(matrixSizeRows),
+        })}
+      >
+        {grid.flatMap((row, rowIndex) =>
+          row.map((cell, colIndex) => (
+            <Flex
+              key={`${rowIndex}-${colIndex}`}
+              className={S.gridCell}
+              justify="center"
+              items="center"
+              onClick={() => handleBalloonPop(rowIndex, colIndex)}
+            >
+              {cell === 1 ? "🎈" : ""}
+            </Flex>
+          ))
+        )}
+      </div>
+      {isGameOverOpen && <GameOverModal />}
+      {isGameCompleteOpen && <GameCompleteModal />}
+    </>
   );
 };
